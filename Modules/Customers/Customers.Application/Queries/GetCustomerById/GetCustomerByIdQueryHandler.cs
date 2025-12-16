@@ -17,7 +17,7 @@ public class GetCustomerByIdQueryHandler(ICustomerRepository customerRepository,
     {
         _logger.LogInformation("Inicia proceso de consultar cliente por id");
         var response = await _customerRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
-        _logger.LogInformation("Fianliza proceso, respuesta: {@response}", response);
+        _logger.LogInformation("Fianliza proceso, respuesta: {Id}", response.Id;
 
         return _mapper.Map<CustomerDto>(response);
     }

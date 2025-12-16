@@ -31,7 +31,7 @@ namespace Orders.Application.Commands.DetailsOrder
                 Total = order.Total
             };
 
-            _logger.LogInformation("Finaliza proceso. Respuesta: {@orderDetail}", orderDetail);
+            _logger.LogInformation("Finaliza proceso.");
             return orderDetail;
         }
     }

@@ -17,7 +17,7 @@ public class CreateCustomerCommandHandler(ICustomerRepository customerRepository
     {
         _logger.LogInformation("Inicia proceso Crear Cliente");
         var response = await _customerRepository.CreateAsync(_mapper.Map<CustomerModel>(request)).ConfigureAwait(false);
-        _logger.LogInformation("Finaliza proceso, respuesta: {@response}",response);
+        _logger.LogInformation("Finaliza proceso, respuesta: {Id}",response.Id);
         return _mapper.Map<CustomerDto>(response);
     }
 }

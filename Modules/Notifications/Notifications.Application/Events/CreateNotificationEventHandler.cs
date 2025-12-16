@@ -15,7 +15,7 @@ public class CreateNotificationEventHandler(ISendNotificationService notificatio
 
     public async Task Handle(CreateNotificationEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Inicia proceso de enviar notificacion para {@notification}", notification);
+        _logger.LogInformation("Inicia proceso de enviar notificacion para {Email}", notification.EmailCustomer);
         await _notificationService.SendNotificationEmail(new NotifiactionModel()
         {
             EmailCustomer = notification.EmailCustomer,

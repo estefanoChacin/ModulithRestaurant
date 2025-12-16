@@ -17,7 +17,7 @@ public class GetProductsByIdsQueryHandler(IProductRepository productRepository, 
     public async Task<List<ProductDto>> Handle(GetProductsByIdsQuery request, CancellationToken cancellationToken)
     {
         var listResponse = await _productRepository.GetProductsByIdsAsync(request.ListIds).ConfigureAwait(false);
-        _logger.LogInformation("Se listan productos por lista de ids");
+        _logger.LogInformation("Se listan productos por lista de ids: {@Ids}", listResponse);
         return _mapper.Map<List<ProductDto>>(listResponse);
     }
 

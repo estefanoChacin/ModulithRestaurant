@@ -18,7 +18,7 @@ public class CreateProductCommandHandler(IProductRepository productRepository, I
     {
         _logger.LogInformation("Inicia proceso de crear producto");
         var response = await _productRepository.CreateAsync(_mapper.Map<ProductModel>(request));
-        _logger.LogInformation("Finaliza proceso, respuesta: {@response}", response);
+        _logger.LogInformation("Finaliza proceso, respuesta: {Id}", response.Id);
         return _mapper.Map<ProductDto>(response);
     }
 }

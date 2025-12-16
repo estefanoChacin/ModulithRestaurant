@@ -53,7 +53,7 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper
             Total = orderCreated.Total
         }, cancellationToken);
 
-        _logger.LogInformation("Finaliza proceso, respuesta: {@orderCreated}", orderCreated);
+        _logger.LogInformation("Finaliza proceso, respuesta: {Id}", orderCreated.Id);
         return _mapper.Map<OrderDto>(orderCreated);
     }
 
