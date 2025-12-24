@@ -6,7 +6,6 @@ using Products.Domain.Interfaces;
 using Products.Domain.Models;
 using Products.Infrastructure.Entities;
 using restatunt.Shared.Constans;
-using restatunt.Shared.DTOs.Order;
 
 namespace Products.Infrastructure.Repository;
 
@@ -21,9 +20,12 @@ public class ProductRepository : IProductRepository
     {
         _mapper = mapper;
         _configuration = configuration;
-        var client = new MongoClient(_configuration.GetValue<string>(ConstantsServer.CONNECTION_STRING));
-        _mongoDatabase = client.GetDatabase(_configuration.GetValue<string>(ConstantsServer.DATABASE_NAME));
-        _collection = _mongoDatabase.GetCollection<ProductEntity>(_configuration.GetValue<string>(ConstantsServer.COLLECTION_PRODUCTS));
+        var client = new MongoClient(
+            _configuration.GetValue<string>(ConstantsServer.CONNECTION_STRING));
+        _mongoDatabase = client.GetDatabase(
+            _configuration.GetValue<string>(ConstantsServer.DATABASE_NAME));
+        _collection = _mongoDatabase.GetCollection<ProductEntity>(
+            _configuration.GetValue<string>(ConstantsServer.COLLECTION_PRODUCTS));
     }
 
     public async Task<ProductModel> CreateAsync(ProductModel product)
@@ -41,7 +43,9 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<ProductModel>> GetAllAsync()
     {
-        var ListEntity = await _collection.Find(e => true).ToListAsync().ConfigureAwait(false);
+        var ListEntity = await _collection.Find(e => true)
+            .ToListAsync()
+            .ConfigureAwait(false);
         return _mapper.Map<List<ProductModel>>(ListEntity);
     }
 
@@ -49,14 +53,19 @@ public class ProductRepository : IProductRepository
     {
         var objectIds = ids.Select(id => new ObjectId(id)).ToList();
         var filter = Builders<ProductEntity>.Filter.In("_id", objectIds);
-        var ListEntity = await _collection.Find(filter).ToListAsync().ConfigureAwait(false);
+        var ListEntity = await _collection.Find(filter)
+            .ToListAsync()
+            .ConfigureAwait(false);
+
         return _mapper.Map<List<ProductModel>>(ListEntity);
     }
 
 
     public async Task<ProductModel> GetByIdAsync(string id)
     {
-        var ListEntity = await _collection.Find(e => e.Id == id).ToListAsync().ConfigureAwait(false);
+        var ListEntity = await _collection.Find(e => e.Id == id)
+            .ToListAsync()
+            .ConfigureAwait(false);
         return _mapper.Map<ProductModel>(ListEntity);
     }
 

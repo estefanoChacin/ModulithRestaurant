@@ -5,7 +5,10 @@ using restatunt.Shared.Events.Products;
 
 namespace Products.Application.Events;
 
-public class AdjustProductStockEventHandler(IProductRepository productRepository, ILogger<AdjustProductStockEventHandler> logger) : INotificationHandler<AdjustProductStockEvent>
+public class AdjustProductStockEventHandler(
+    IProductRepository productRepository, 
+    ILogger<AdjustProductStockEventHandler> logger) 
+    : INotificationHandler<AdjustProductStockEvent>
 {
     private readonly IProductRepository _productRepository = productRepository;
     private readonly ILogger<AdjustProductStockEventHandler> _logger = logger;

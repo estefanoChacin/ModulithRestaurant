@@ -10,7 +10,9 @@ namespace Restaurant.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServicesModules(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddServicesModules(
+        this IServiceCollection services, 
+        IConfiguration configuration)
     {
         #region Libreries
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
@@ -26,7 +28,9 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddAppConfigKeyVault(this IServiceCollection services, IConfigurationBuilder configuration)
+    public static IServiceCollection AddAppConfigKeyVault(
+        this IServiceCollection services, 
+        IConfigurationBuilder configuration)
     {
         configuration.AddAzureAppConfiguration(options =>
         {
@@ -56,5 +60,6 @@ public static class ServiceCollectionExtensions
     }
 
     private static string GetEnviromentURL()
-        => Environment.GetEnvironmentVariable(ConstantsServer.URL_APPCONFIG) ?? throw new ArgumentException(nameof(Environment));
+        => Environment.GetEnvironmentVariable(ConstantsServer.URL_APPCONFIG) 
+        ?? throw new ArgumentException(nameof(Environment));
 }

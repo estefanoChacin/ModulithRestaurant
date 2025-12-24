@@ -19,9 +19,12 @@ public class OrderRepository : IOrderRepository
     {
         _mapper = mapper;
         _configuration = configuration;
-        var client = new MongoClient(_configuration.GetValue<string>(ConstantsServer.CONNECTION_STRING));
-        _mongoDatabase = client.GetDatabase(_configuration.GetValue<string>(ConstantsServer.DATABASE_NAME));
-        _collection = _mongoDatabase.GetCollection<OrderEntity>(_configuration.GetValue<string>(ConstantsServer.COLLECTION_ORDERS));
+        var client = new MongoClient(_configuration
+            .GetValue<string>(ConstantsServer.CONNECTION_STRING));
+        _mongoDatabase = client.GetDatabase(_configuration
+            .GetValue<string>(ConstantsServer.DATABASE_NAME));
+        _collection = _mongoDatabase.GetCollection<OrderEntity>(_configuration
+            .GetValue<string>(ConstantsServer.COLLECTION_ORDERS));
     }
 
 
@@ -40,13 +43,17 @@ public class OrderRepository : IOrderRepository
 
     public async Task<List<OrderModel>> GetAllAsync()
     {
-        var ListEntity = await _collection.Find(e => true).ToListAsync().ConfigureAwait(false);
+        var ListEntity = await _collection.Find(e => true)
+            .ToListAsync()
+            .ConfigureAwait(false);
         return _mapper.Map<List<OrderModel>>(ListEntity);
     }
 
     public async Task<OrderModel> GetByIdAsync(string id)
     {
-        var Entity = await _collection.Find(e => e.Id == id).FirstOrDefaultAsync().ConfigureAwait(false);
+        var Entity = await _collection.Find(e => e.Id == id)
+            .FirstOrDefaultAsync()
+            .ConfigureAwait(false);
         return _mapper.Map<OrderModel>(Entity);
     }
 

@@ -7,7 +7,11 @@ using restatunt.Shared.Events.Notifications;
 
 namespace Notifications.Application.Events;
 
-public class CreateNotificationEventHandler(ISendNotificationService notificationService, IMapper mapper, ILogger<CreateNotificationEventHandler> logger) : INotificationHandler<CreateNotificationEvent>
+public class CreateNotificationEventHandler(
+    ISendNotificationService notificationService, 
+    IMapper mapper, 
+    ILogger<CreateNotificationEventHandler> logger) 
+    : INotificationHandler<CreateNotificationEvent>
 {
     private readonly ISendNotificationService _notificationService = notificationService;
     private readonly IMapper _mapper = mapper;

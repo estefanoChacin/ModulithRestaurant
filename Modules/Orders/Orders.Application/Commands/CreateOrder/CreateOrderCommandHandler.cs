@@ -12,7 +12,12 @@ using restatunt.Shared.Queries.Products;
 
 namespace Orders.Application.Commands.CreateOrder;
 
-public class CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper mapper, IMediator mediator, ILogger<CreateOrderCommandHandler> logger) : IRequestHandler<CreateOrderCommand, OrderDto>
+public class CreateOrderCommandHandler(
+    IOrderRepository orderRepository,
+    IMapper mapper,
+    IMediator mediator,
+    ILogger<CreateOrderCommandHandler> logger)
+    : IRequestHandler<CreateOrderCommand, OrderDto>
 {
     private readonly IOrderRepository _orderRepository = orderRepository;
     private readonly IMapper _mapper = mapper;
@@ -23,8 +28,10 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper
     {
         _logger.LogInformation("Inicia proceso de crear orden");
         //validar existencia de cliente
-        var customer = await _mediator.Send(new GetCustomerByIdQuery(request.IdCustomer), cancellationToken).ConfigureAwait(false)
-        ?? throw new Exception("cliente no existe");
+        var customer = await _mediator.Send(
+            new GetCustomerByIdQuery(request.IdCustomer),
+            cancellationToken).ConfigureAwait(false)
+            ?? throw new Exception("cliente no existe");
 
         var order = _mapper.Map<OrderModel>(request);
         //validar existencia de productos
@@ -57,11 +64,15 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper
         return _mapper.Map<OrderDto>(orderCreated);
     }
 
-
-    private static async Task<List<ProductDto>> ValidateExistsProducts(OrderModel order, IMediator _mediator, CancellationToken cancellationToken)
+    private static async Task<List<ProductDto>> ValidateExistsProducts(
+        OrderModel order,
+        IMediator _mediator,
+        CancellationToken cancellationToken)
     {
         var listIds = order.Products.Select(p => p.Id).ToList();
-        var productsExists = await _mediator.Send(new GetProductsByIdsQuery(listIds), cancellationToken).ConfigureAwait(false);
+        var productsExists = await _mediator.Send(
+            new GetProductsByIdsQuery(listIds),
+            cancellationToken).ConfigureAwait(false);
 
         if (listIds.Count != productsExists.Count)
             throw new Exception("No existen algunos productos");
@@ -69,7 +80,9 @@ public class CreateOrderCommandHandler(IOrderRepository orderRepository, IMapper
         return productsExists;
     }
 
-    private static void ValidateProductsExhausted(OrderModel order, List<ProductDto> productsExists)
+    private static void ValidateProductsExhausted(
+        OrderModel order,
+        List<ProductDto> productsExists)
     {
         //obtener productos que tengan un stock menor al solicitado en la orden
         var itemsOrder = order.Products;

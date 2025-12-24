@@ -7,7 +7,12 @@ using restatunt.Shared.Events.Products;
 
 namespace Orders.Application.Commands.DeleteOrder;
 
-public class DeleteOrderCommandHandler(IMediator mediator, IMapper mapper, IOrderRepository orderRepository, ILogger<DeleteOrderCommandHandler> logger) : IRequestHandler<DeleteOrderCommand, bool>
+public class DeleteOrderCommandHandler(
+    IMediator mediator, 
+    IMapper mapper, 
+    IOrderRepository orderRepository, 
+    ILogger<DeleteOrderCommandHandler> logger) 
+    : IRequestHandler<DeleteOrderCommand, bool>
 {
     private readonly IMediator _mediator = mediator;
     private readonly IMapper _mapper = mapper;
@@ -18,7 +23,8 @@ public class DeleteOrderCommandHandler(IMediator mediator, IMapper mapper, IOrde
     {
         _logger.LogInformation("Inicia proceso de eliminar orden, id: {id}", request.IdOrder);
         //verificar que la orden exista y obtener los productos de la orden
-        var orderExists = await _orderRepository.GetByIdAsync(request.IdOrder) ?? throw new Exception("No existe Orden");
+        var orderExists = await _orderRepository.GetByIdAsync(request.IdOrder) 
+            ?? throw new Exception("No existe Orden");
         var itemsOrder = _mapper.Map<List<ItemDto>>(orderExists.Products);
         //lanzar evento para ajustar el stock de los productos
         await _mediator.Publish(new AdjustProductStockEvent(

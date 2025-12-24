@@ -16,11 +16,17 @@ public class SendNotificationService(IOptions<SettingsNotificationsModel> option
         var client = new SmtpClient(_options.Value.SmtpServer)
         {
             Port = Convert.ToInt32(_options.Value.Port),
-            Credentials = new NetworkCredential(_options.Value.Email, _options.Value.Password),
+            Credentials = new NetworkCredential(
+                _options.Value.Email,
+                _options.Value.Password),
             EnableSsl = Convert.ToBoolean(_options.Value.EnableSsl) // ¡Importante!
         };
 
-        var body = string.Format(GetContentTemplateOrderCreated(), notification.IdOrder, notification.Total);
+        var body = string.Format(
+            GetContentTemplateOrderCreated(), 
+            notification.IdOrder, 
+            notification.Total);
+
         var message = new MailMessage
         {
             From = new MailAddress(_options.Value.Email),
@@ -35,7 +41,11 @@ public class SendNotificationService(IOptions<SettingsNotificationsModel> option
 
     private static string GetContentTemplateOrderCreated()
     {
-        var template = File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Templates", "EmailOrder.html"));
+        var template = File.ReadAllText(Path.Combine(
+            AppContext.BaseDirectory, 
+            "Templates", 
+            "EmailOrder.html"));
+     
         return template;
     }
 

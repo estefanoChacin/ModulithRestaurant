@@ -6,7 +6,11 @@ using Orders.Domain.Interfaces;
 
 namespace Orders.Application.Queries
 {
-    public class GetAllOrdersQueryHandler(IOrderRepository orderRepository, IMapper mapper, ILogger<GetAllOrdersQueryHandler> logger) : IRequestHandler<GetAllOrdersQuery, List<OrderDto>>
+    public class GetAllOrdersQueryHandler(
+        IOrderRepository orderRepository, 
+        IMapper mapper, 
+        ILogger<GetAllOrdersQueryHandler> logger) 
+        : IRequestHandler<GetAllOrdersQuery, List<OrderDto>>
     {
         private readonly IOrderRepository _orderRepository = orderRepository;
         private readonly IMapper _mapper = mapper;
